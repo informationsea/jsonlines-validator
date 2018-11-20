@@ -1,0 +1,36 @@
+language: go
+before_script:
+- go build
+- sed -i -e "s/@DEV@/$TRAVIS_TAG($TRAVIS_COMMIT)/" main.go
+before_install:
+- go get github.com/mitchellh/gox
+before_deploy:
+- gox -osarch "linux/386 linux/amd64 linux/arm linux/arm64 windows/386 windows/amd64
+  darwin/amd64 freebsd/amd64 freebsd/386 openbsd/amd64 openbsd/386"
+go:
+- 1.x
+- 1.10.x
+- master
+matrix:
+  allow_failures:
+  - go: master
+deploy:
+  provider: releases
+  api_key:
+    secure: SKhptNaXF1yx3UPux/AR3AQOuQB3Xd06aK1zCsFjFPcheBOKTtynkckttcEz4OJztLWhfF///UztQfZVyIHkljFAhha07trPG7h5tVHBRYAAcd9Pqix/WKvVVEAM8oDlIlwVC0ZpZQIHyRXPcSn6SqDRPf37LBCTf7jS4dvS8PdJFECQk2MjLdEr/fDKKGwZ8WCHnQUgcVG5Frhbar5TcL//7VRauzg5k0OnTtB8pqBBAEttCOuVyyZzumr9WJ8vgrwNywt7L7aPnKPpwK+vOttWAv+WCGq2Pi+pPu7DHbPtnttf1klo1mqlAflqAl/fJxyXd0pzSFe5RTs+fAhwzgszhfkh4twl86bSS3X+8SmMa/4l5jfStCIGhuYPq4p3kcTbX3yaN2E+VKbsClZVXaHGo8UtEXw8pKZM7FPdcHfwnMZWftFqAGjA87FZdZxUi2OpTzLSD+hwK0zhkXnE2mcsokNKiiRfIED1mul+gWBg5Eh8iJwSi7+d+dSdqNDOuYeApJeZQg/QqGPL62Wcz9/39cWBf+M3tE9VGzuisYHS/WZwLUnvjtd6Hd9QQ1BUokB50Cy7mUoiD78UmF8E0YErd5xNa535kmuCyev4+wao2waVmD+mUhXZFG/tI6+zC6gqsmotyu853QlmVyB1PbqEvzAFY6pCpXUBkaXYxS0=
+  file:
+  - jsonlines-validator_darwin_amd64
+  - jsonlines-validator_freebsd_386
+  - jsonlines-validator_freebsd_amd64
+  - jsonlines-validator_linux_386
+  - jsonlines-validator_linux_amd64
+  - jsonlines-validator_linux_arm
+  - jsonlines-validator_linux_arm64
+  - jsonlines-validator_openbsd_386
+  - jsonlines-validator_openbsd_amd64
+  - jsonlines-validator_windows_386.exe
+  - jsonlines-validator_windows_amd64.exe
+  on:
+    repo: informationsea/jsonlines-validator
+    tags: true
+  skip_cleanup: true
