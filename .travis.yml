@@ -5,8 +5,7 @@ before_script:
 before_install:
 - go get github.com/mitchellh/gox
 before_deploy:
-- gox -osarch "linux/386 linux/amd64 linux/arm linux/arm64 windows/386 windows/amd64
-  darwin/amd64 freebsd/amd64 freebsd/386 openbsd/amd64 openbsd/386"
+- gox -osarch "linux/386 linux/amd64 linux/arm linux/arm64 windows/386 windows/amd64 darwin/amd64 freebsd/amd64 freebsd/386 openbsd/amd64 openbsd/386"
 go:
 - 1.x
 - 1.10.x
@@ -33,4 +32,5 @@ deploy:
   on:
     repo: informationsea/jsonlines-validator
     tags: true
+    go: "1.x"
   skip_cleanup: true
